@@ -1,5 +1,12 @@
 # SSO client Rails Engine
 
+[![Dependency Status](https://gemnasium.com/monterail/rails_sso.svg)](https://gemnasium.com/monterail/rails_sso)
+[![Gem Version](https://badge.fury.io/rb/rails_sso.svg)](http://badge.fury.io/rb/rails_sso)
+
+## About
+
+*SOON*
+
 ## Installation
 
 Add engine and [omniauth](https://github.com/intridea/omniauth-oauth2) provider gems to your project:
