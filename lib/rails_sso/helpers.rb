@@ -18,7 +18,7 @@ module RailsSso
       redirect_to sign_in_path unless user_signed_in?
     end
 
-    def invalidate_user!
+    def invalidate_access_token!
       if RailsSso.provider_sign_out_path
         access_token.delete(RailsSso.provider_sign_out_path)
       end
@@ -26,32 +26,25 @@ module RailsSso
       reset_session
     end
 
+    def save_access_token!(access_token)
+      session[:access_token] = access_token.token
+      session[:refresh_token] = access_token.refresh_token
+    end
+
     private
 
     def fetch_user
       return unless session[:access_token]
 
-      RailsSso::FetchUser.new(access_token, session).get_and_cache
+      RailsSso::FetchUser.new(access_token).get_and_cache
     rescue ::OAuth2::Error
-      nil
+      save_access_token!(access_token.refresh!)
+
+      RailsSso::FetchUser.new(access_token).get_and_cache
     end
 
     def access_token
-      OAuth2::AccessToken.new(oauth_client, session[:access_token], {
-        refresh_token: session[:refresh_token]
-      })
-    end
-
-    def oauth_client
-      oauth_strategy.client
-    end
-
-    def oauth_strategy
-      oauth_strategy_class.new(nil, RailsSso.provider_key, RailsSso.provider_secret)
-    end
-
-    def oauth_strategy_class
-      "OmniAuth::Strategies::#{RailsSso.provider_name.classify}".constantize
+      RailsSso::AccessToken.new(session[:access_token], session[:refresh_token])
     end
   end
 end

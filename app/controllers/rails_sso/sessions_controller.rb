@@ -3,14 +3,13 @@ module RailsSso
     skip_before_action :authenticate_user!, only: [:create]
 
     def create
-      session[:access_token] = auth_hash.credentials.token
-      session[:refresh_token] = auth_hash.credentials.refresh_token
+      save_access_token!(auth_hash.credentials)
 
       redirect_to root_path
     end
 
     def destroy
-      invalidate_user!
+      invalidate_access_token!
 
       redirect_to root_path
     end

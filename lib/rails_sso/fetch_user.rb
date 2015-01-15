@@ -1,7 +1,7 @@
 module RailsSso
   class FetchUser
-    def initialize(access_token, storage)
-      @access_token, @storage = access_token, storage
+    def initialize(access_token)
+      @access_token = access_token
     end
 
     def get_and_cache
@@ -10,18 +10,10 @@ module RailsSso
 
     private
 
-    attr_reader :access_token, :storage
+    attr_reader :access_token
 
-    def get(tries = 1)
+    def get
       access_token.get(RailsSso.provider_profile_path).parsed
-    rescue ::OAuth2::Error => e
-      if tries > 0
-        refresh_token!
-
-        get(0)
-      else
-        raise e
-      end
     end
 
     def updater(data)
@@ -33,13 +25,6 @@ module RailsSso
         fields: RailsSso.user_fields,
         repository: RailsSso.user_repository.new
       }
-    end
-
-    def refresh_token!
-      @access_token = access_token.refresh!
-
-      storage[:access_token] = access_token.token
-      storage[:refresh_token] = access_token.refresh_token
     end
   end
 end

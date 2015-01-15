@@ -63,9 +63,11 @@ Available helpers for controllers and views:
 * `current_user`
 * `user_signed_in?`
 
-Available filters for controllers:
+Available filters and helpers for controllers:
 
 * `authenticate_user!`
+* `save_access_token!`
+* `invalidate_access_token!`
 
 Available helpers for views:
 
