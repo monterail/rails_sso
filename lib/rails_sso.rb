@@ -30,6 +30,4 @@ end
 require 'rails_sso/version'
 require 'rails_sso/engine'
 require 'rails_sso/helpers'
-require 'rails_sso/update_user'
-require 'rails_sso/fetch_user'
 require 'rails_sso/access_token'
