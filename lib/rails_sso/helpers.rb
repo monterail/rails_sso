@@ -18,6 +18,10 @@ module RailsSso
       redirect_to sign_in_path unless user_signed_in?
     end
 
+    def access_token
+      RailsSso::AccessToken.new(session[:access_token], session[:refresh_token])
+    end
+
     def invalidate_access_token!
       if RailsSso.provider_sign_out_path
         access_token.delete(RailsSso.provider_sign_out_path)
@@ -31,6 +35,14 @@ module RailsSso
       session[:refresh_token] = access_token.refresh_token
     end
 
+    def refresh_access_token!
+      save_access_token!(access_token.refresh!)
+
+      yield if block_given?
+    rescue ::OAuth2::Error
+      nil
+    end
+
     private
 
     def fetch_user
@@ -38,13 +50,9 @@ module RailsSso
 
       RailsSso::FetchUser.new(access_token).get_and_cache
     rescue ::OAuth2::Error
-      save_access_token!(access_token.refresh!)
-
-      RailsSso::FetchUser.new(access_token).get_and_cache
-    end
-
-    def access_token
-      RailsSso::AccessToken.new(session[:access_token], session[:refresh_token])
+      refresh_access_token! do
+        RailsSso::FetchUser.new(access_token).get_and_cache
+      end
     end
   end
 end
