@@ -33,6 +33,8 @@ RailsSso.configure do |config|
   config.provider_profile_path = '/api/v1/profile'
   # set if you support single sign out
   config.provider_sign_out_path = '/api/v1/session'
+  # enable cache (will use Rails.cache store)
+  config.use_cache = Rails.application.config.action_controller.perform_caching
 
   # user fields to synchronize from API
   config.user_fields = [
@@ -78,11 +80,11 @@ Available helpers for views:
 
 Required methods:
 
-* `find_by({ key: value })`
-* `create_with_id(id, attrs)`
+* `find_by_sso_id(id)`
+* `create_with_sso_id(id, attrs)`
 * `update(record, attrs)`
 
-Example:
+Example with `ActiveRecord` user model:
 
 ```ruby
 # app/repositories/user_repository.rb
@@ -94,13 +96,13 @@ class UserRepository
     self.adapter = adapter
   end
 
-  def find_by(attrs)
-    adapter.find_by(attrs)
+  def find_by_sso_id(id)
+    adapter.find_by(sso_id: id)
   end
 
-  def create_with_id(id, attrs)
+  def create_with_sso_id(id, attrs)
     adapter.new(attrs) do |user|
-      user.id = id
+      user.sso_id = id
       user.save!
     end
   end

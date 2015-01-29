@@ -1,16 +1,16 @@
 module RailsSso
   class UpdateUser
     def initialize(data, options = {})
-      @id, @data = data.delete('id'), data
+      @id, @data = data['id'], data.except('id')
       @fields, @repository = options.values_at(:fields, :repository)
     end
 
     def call
-      if user = repository.find_by(id: id)
+      if user = repository.find_by_sso_id(id)
         repository.update(user, params)
         user
       else
-        repository.create_with_id(id, params)
+        repository.create_with_sso_id(id, params)
       end
     end
 

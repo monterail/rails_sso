@@ -7,7 +7,9 @@ module RailsSso
     end
 
     def current_user
-      @current_user ||= fetch_user
+      @current_user ||= fetch_user do |user|
+        update_user(user).call
+      end
     end
 
     def user_signed_in?
@@ -45,14 +47,25 @@ module RailsSso
 
     private
 
-    def fetch_user
+    def fetch_user(&block)
       return unless session[:access_token]
 
-      RailsSso::FetchUser.new(access_token).get_and_cache
+      RailsSso::FetchUser.new(access_token).call(&block)
     rescue ::OAuth2::Error
       refresh_access_token! do
-        RailsSso::FetchUser.new(access_token).get_and_cache
+        RailsSso::FetchUser.new(access_token).call(&block)
       end
+    end
+
+    def update_user(data)
+      RailsSso::UpdateUser.new(data, update_user_options).call
+    end
+
+    def update_user_options
+      {
+        fields: RailsSso.user_fields,
+        repository: RailsSso.user_repository.new
+      }
     end
   end
 end

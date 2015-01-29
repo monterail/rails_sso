@@ -18,6 +18,10 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 4.1"
+  s.add_dependency "faraday-http-cache", "~> 1.0"
+  s.add_dependency "omniauth-oauth2", "~> 1.2"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "anima"
+  s.add_development_dependency "mocha"
 end

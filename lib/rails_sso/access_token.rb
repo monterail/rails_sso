@@ -1,3 +1,5 @@
+require 'faraday-http-cache'
+
 module RailsSso
   class AccessToken
     attr_reader :token, :refresh_token
@@ -25,7 +27,18 @@ module RailsSso
     private
 
     def client
-      strategy.client
+      strategy.client.tap do |c|
+        if RailsSso.use_cache
+          c.options[:connection_build] = Proc.new do |conn|
+            conn.use :http_cache,
+              store: Rails.cache,
+              logger: Rails.logger,
+              shared_cache: false
+
+            conn.adapter Faraday.default_adapter
+          end
+        end
+      end
     end
 
     def strategy

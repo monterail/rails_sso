@@ -14,6 +14,9 @@ module RailsSso
   mattr_accessor :user_fields
   @@user_fields = [:email]
 
+  mattr_accessor :use_cache
+  @@use_cache = false
+
   def self.configure
     yield self
   end
@@ -27,6 +30,7 @@ module RailsSso
   end
 end
 
+require 'omniauth-oauth2'
 require 'rails_sso/version'
 require 'rails_sso/engine'
 require 'rails_sso/helpers'
