@@ -8,7 +8,7 @@ module RailsSso
 
     def current_user
       @current_user ||= fetch_user do |user|
-        update_user(user).call
+        cache_user(user)
       end
     end
 
@@ -57,7 +57,7 @@ module RailsSso
       end
     end
 
-    def update_user(data)
+    def cache_user(data)
       RailsSso::UpdateUser.new(data, update_user_options).call
     end
 
