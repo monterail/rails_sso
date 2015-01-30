@@ -46,7 +46,7 @@ module RailsSso
     end
 
     def strategy_class
-      "OmniAuth::Strategies::#{RailsSso.provider_name.classify}".constantize
+      "OmniAuth::Strategies::#{RailsSso.provider_name.camelize}".constantize
     end
   end
 end
