@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_sso (0.1.1)
+    rails_sso (0.1.2)
       faraday-http-cache (~> 1.0)
       omniauth-oauth2 (~> 1.2)
       rails (~> 4.1)
@@ -67,7 +67,7 @@ GEM
     i18n (0.7.0)
     ice_nine (0.11.1)
     json (1.8.2)
-    jwt (1.2.0)
+    jwt (1.2.1)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
