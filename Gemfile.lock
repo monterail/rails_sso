@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_sso (0.1.2)
+    rails_sso (0.1.3)
       faraday-http-cache (~> 1.0)
       omniauth-oauth2 (~> 1.2)
       rails (~> 4.1)
