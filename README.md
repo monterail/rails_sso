@@ -1,6 +1,6 @@
 # SSO client Rails Engine
 
-[![Circle CI](https://circleci.com/gh/monterail/rails_sso/tree/master.svg?style=svg&circle-token=237c44548fb2c2597bcd0bc7b1dd99c81329e574)](https://circleci.com/gh/monterail/rails_sso/tree/master)
+[![Circle CI](https://circleci.com/gh/monterail/rails_sso/tree/master.svg?style=shield&circle-token=237c44548fb2c2597bcd0bc7b1dd99c81329e574)](https://circleci.com/gh/monterail/rails_sso/tree/master)
 [![Dependency Status](https://gemnasium.com/monterail/rails_sso.svg)](https://gemnasium.com/monterail/rails_sso)
 [![Gem Version](https://badge.fury.io/rb/rails_sso.svg)](http://badge.fury.io/rb/rails_sso)
 
