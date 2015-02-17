@@ -2,6 +2,6 @@ machine:
   ruby:
     version: 2.1.5
 
-test:
+database:
   override:
-    - bundle exec rake test
+    - echo "no db needed"
