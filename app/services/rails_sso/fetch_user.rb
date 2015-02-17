@@ -5,15 +5,11 @@ module RailsSso
     end
 
     def call
-      yield(get)
+      access_token.get(RailsSso.provider_profile_path).parsed
     end
 
     private
 
     attr_reader :access_token
-
-    def get
-      access_token.get(RailsSso.provider_profile_path).parsed
-    end
   end
 end

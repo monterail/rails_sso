@@ -9,11 +9,6 @@ module RailsSso
   mattr_accessor :provider_profile_path
   mattr_accessor :provider_sign_out_path
 
-  mattr_accessor :user_repository
-
-  mattr_accessor :user_fields
-  @@user_fields = [:email]
-
   mattr_accessor :use_cache
   @@use_cache = false
 

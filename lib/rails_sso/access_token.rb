@@ -26,9 +26,9 @@ module RailsSso
 
     private
 
-    def client
+    def client(cache = RailsSso.use_cache)
       strategy.client.tap do |c|
-        if RailsSso.use_cache
+        if cache
           c.options[:connection_build] = Proc.new do |conn|
             conn.use :http_cache,
               store: Rails.cache,

@@ -35,16 +35,6 @@ RailsSso.configure do |config|
   config.provider_sign_out_path = '/api/v1/session'
   # enable cache (will use Rails.cache store)
   config.use_cache = Rails.application.config.action_controller.perform_caching
-
-  # user fields to synchronize from API
-  config.user_fields = [
-    :email,
-    :name,
-    :roles
-  ]
-
-  # user repository class name
-  config.user_repository = 'UserRepository'
 end
 ```
 
@@ -62,7 +52,7 @@ end
 
 Available helpers for controllers and views:
 
-* `current_user`
+* `current_user_data`
 * `user_signed_in?`
 
 Available filters and helpers for controllers:
@@ -75,43 +65,6 @@ Available helpers for views:
 
 * `sso.sign_in_path`
 * `sso.sign_out_path`
-
-## User Repository
-
-Required methods:
-
-* `find_by_sso_id(id)`
-* `create_with_sso_id(id, attrs)`
-* `update(record, attrs)`
-
-Example with `ActiveRecord` user model:
-
-```ruby
-# app/repositories/user_repository.rb
-
-class UserRepository
-  attr_accessor :adapter
-
-  def initialize(adapter = User)
-    self.adapter = adapter
-  end
-
-  def find_by_sso_id(id)
-    adapter.find_by(sso_id: id)
-  end
-
-  def create_with_sso_id(id, attrs)
-    adapter.new(attrs) do |user|
-      user.sso_id = id
-      user.save!
-    end
-  end
-
-  def update(record, attrs)
-    adapter.update(record.id, attrs)
-  end
-end
-```
 
 ## Contributing
 

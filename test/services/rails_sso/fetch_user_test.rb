@@ -15,17 +15,11 @@ class RailsSso::FetchUserTest < ActiveSupport::TestCase
     @access_token = AccessToken.new(setup_access_token_client)
   end
 
-  test "call should fetch user with access token and yield parsed data" do
-    called = false
+  test "call should fetch user with access token and return parsed data" do
+    data = RailsSso::FetchUser.new(@access_token).call
 
-    RailsSso::FetchUser.new(@access_token).call do |data|
-      called = true
-
-      assert_equal data['name'], user_data['name']
-      assert_equal data['email'], user_data['email']
-    end
-
-    assert called, 'RailsSso::FetchUser#call should yield fetched data'
+    assert_equal data['name'], user_data['name']
+    assert_equal data['email'], user_data['email']
   end
 
   def setup_access_token_client
@@ -39,8 +33,7 @@ class RailsSso::FetchUserTest < ActiveSupport::TestCase
   def user_data
     {
       'name' => 'Kowalski',
-      'email' => 'jan@kowalski.pl',
-      'key' => 'value'
+      'email' => 'jan@kowalski.pl'
     }
   end
 end

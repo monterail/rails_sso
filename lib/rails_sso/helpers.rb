@@ -2,18 +2,16 @@ module RailsSso
   module Helpers
     def self.included(base)
       base.class_eval do
-        helper_method :current_user, :user_signed_in?
+        helper_method :current_user_data, :user_signed_in?
       end
     end
 
-    def current_user
-      @current_user ||= fetch_user do |user|
-        cache_user(user)
-      end
+    def current_user_data
+      @current_user ||= fetch_user
     end
 
     def user_signed_in?
-      !!current_user
+      !!current_user_data
     end
 
     def authenticate_user!
@@ -55,17 +53,6 @@ module RailsSso
       refresh_access_token! do
         RailsSso::FetchUser.new(access_token).call(&block)
       end
-    end
-
-    def cache_user(data)
-      RailsSso::UpdateUser.new(data, update_user_options).call
-    end
-
-    def update_user_options
-      {
-        fields: RailsSso.user_fields,
-        repository: RailsSso.user_repository.new
-      }
     end
   end
 end
