@@ -7,7 +7,7 @@ module RailsSso
     end
 
     def current_user_data
-      @current_user ||= fetch_user
+      @current_user_data ||= fetch_user_data
     end
 
     def user_signed_in?
@@ -45,13 +45,13 @@ module RailsSso
 
     private
 
-    def fetch_user(&block)
+    def fetch_user_data
       return unless session[:access_token]
 
-      RailsSso::FetchUser.new(access_token).call(&block)
+      RailsSso::FetchUser.new(access_token).call
     rescue ::OAuth2::Error
       refresh_access_token! do
-        RailsSso::FetchUser.new(access_token).call(&block)
+        RailsSso::FetchUser.new(access_token).call
       end
     end
   end
