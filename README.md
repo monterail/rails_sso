@@ -21,7 +21,13 @@ gem 'omniauth-example'
 gem 'rails_sso'
 ```
 
-Configure it:
+Install initializer and mount routes:
+
+```bash
+bin/rails generate rails_sso
+```
+
+Configure initializer:
 
 ```ruby
 # conifg/initializers/sso.rb
