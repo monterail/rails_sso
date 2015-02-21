@@ -1,4 +1,6 @@
 RailsSso.configure do |config|
+  # url of entity provider
+  config.provider_url = 'https://example.com'
   # name of oauth2 provider
   config.provider_name = 'example'
   # oauth keys for omniauth-example

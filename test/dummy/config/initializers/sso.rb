@@ -1,4 +1,5 @@
 RailsSso.configure do |config|
+  config.provider_url = 'http://example.com'
   config.provider_name = 'developer'
   config.provider_key = 'key'
   config.provider_secret = 'secret'
