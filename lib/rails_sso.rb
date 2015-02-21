@@ -2,6 +2,7 @@ module RailsSso
   mattr_accessor :application_controller
   @@application_controller = 'ApplicationController'
 
+  mattr_accessor :provider_url
   mattr_accessor :provider_name
   mattr_accessor :provider_key
   mattr_accessor :provider_secret
@@ -29,4 +30,4 @@ require 'omniauth-oauth2'
 require 'rails_sso/version'
 require 'rails_sso/engine'
 require 'rails_sso/helpers'
-require 'rails_sso/access_token'
+require 'rails_sso/client'

@@ -19,7 +19,9 @@ module RailsSso
     end
 
     def access_token
-      RailsSso::AccessToken.new(session[:access_token], session[:refresh_token])
+      OAuth2::AccessToken.new(oauth2_strategy.client, session[:access_token], {
+        refresh_token: session[:refresh_token]
+      })
     end
 
     def invalidate_access_token!
@@ -45,14 +47,37 @@ module RailsSso
 
     private
 
+    def oauth2_strategy
+       oauth2_strategy_class.new(nil, RailsSso.provider_key, RailsSso.provider_secret)
+    end
+
+    def oauth2_strategy_class
+      "OmniAuth::Strategies::#{RailsSso.provider_name.camelize}".constantize
+    end
+
+    def provider_client
+      @provider_client ||= RailsSso::Client.new(RailsSso.provider_url) do |conn|
+        if RailsSso.use_cache
+          conn.use :http_cache,
+            store: Rails.cache,
+            logger: Rails.logger,
+            shared_cache: false
+
+        end
+
+        conn.adapter Faraday.default_adapter
+      end
+    end
+
+
     def fetch_user_data
       return unless session[:access_token]
 
-      RailsSso::FetchUser.new(access_token).call
-    rescue ::OAuth2::Error
+      RailsSso::FetchUser.new(provider_client.token!(session[:access_token])).call
+    rescue ResponseError => e
       refresh_access_token! do
-        RailsSso::FetchUser.new(access_token).call
-      end
+        RailsSso::FetchUser.new(provider_client.token!(session[:access_token])).call
+      end if e.code == :unauthenticated
     end
   end
 end
