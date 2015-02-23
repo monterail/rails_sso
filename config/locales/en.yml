@@ -1,0 +1,5 @@
+en:
+  rails_sso:
+    errors:
+      unauthenticated: "You're not authenticated"
+      unknown: "Something wrong happened"

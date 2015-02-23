@@ -62,7 +62,6 @@ module RailsSso
             store: Rails.cache,
             logger: Rails.logger,
             shared_cache: false
-
         end
 
         conn.adapter Faraday.default_adapter
