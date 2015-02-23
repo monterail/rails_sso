@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_sso (0.2.1)
+    rails_sso (0.3.0)
       faraday-http-cache (~> 1.0)
       omniauth-oauth2 (~> 1.2)
       rails (~> 4.1)
@@ -61,9 +61,9 @@ GEM
     erubis (2.7.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    faraday-http-cache (1.0.0)
+    faraday-http-cache (1.0.1)
       faraday (~> 0.8)
-    globalid (0.3.2)
+    globalid (0.3.3)
       activesupport (>= 4.1.0)
     hashie (3.4.0)
     hike (1.2.3)
