@@ -68,7 +68,6 @@ module RailsSso
       end
     end
 
-
     def fetch_user_data
       return unless session[:access_token]
 
