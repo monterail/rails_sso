@@ -63,6 +63,7 @@ module RailsSso
           conn.use :http_cache,
             store: Rails.cache,
             logger: Rails.logger,
+            serializer: Marshal,
             shared_cache: false
         end
 
