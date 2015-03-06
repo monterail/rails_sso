@@ -43,6 +43,8 @@ module RailsSso
       yield if block_given?
     rescue ::OAuth2::Error
       nil
+    rescue ResponseError => e
+      nil if e.code == :unauthenticated
     end
 
     private
