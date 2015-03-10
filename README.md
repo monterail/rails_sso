@@ -1,5 +1,7 @@
 # SSO client Rails Engine
 
+[![Join the chat at https://gitter.im/monterail/rails_sso](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/monterail/rails_sso?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Circle CI](https://circleci.com/gh/monterail/rails_sso/tree/master.svg?style=shield&circle-token=237c44548fb2c2597bcd0bc7b1dd99c81329e574)](https://circleci.com/gh/monterail/rails_sso/tree/master)
 [![Dependency Status](https://gemnasium.com/monterail/rails_sso.svg)](https://gemnasium.com/monterail/rails_sso)
 [![Gem Version](https://badge.fury.io/rb/rails_sso.svg)](http://badge.fury.io/rb/rails_sso)
