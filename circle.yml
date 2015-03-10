@@ -5,3 +5,7 @@ machine:
 database:
   override:
     - echo "no db needed"
+
+notify:
+  webhooks:
+    - url: https://webhooks.gitter.im/e/5d1db47506eeaff9fc58
