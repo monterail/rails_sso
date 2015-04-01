@@ -50,7 +50,7 @@ module RailsSso
     private
 
     def oauth2_strategy
-       oauth2_strategy_class.new(nil, RailsSso.provider_key, RailsSso.provider_secret)
+      oauth2_strategy_class.new(request, RailsSso.provider_key, RailsSso.provider_secret)
     end
 
     def oauth2_strategy_class
