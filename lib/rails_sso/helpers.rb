@@ -54,7 +54,7 @@ module RailsSso
     end
 
     def oauth2_strategy_class
-      "OmniAuth::Strategies::#{RailsSso.provider_name.camelize}".constantize
+      OmniAuth::Strategies.const_get("#{OmniAuth::Utils.camelize(RailsSso.provider_name.to_s)}")
     end
 
     def provider_client
