@@ -14,6 +14,11 @@ module RailsSso
             RailsSso.provider_secret,
             callback_path: RailsSso.provider_callback_path
         end
+
+        app.config.middleware.insert_after OmniAuth::Builder, Warden::Manager do |manager|
+          manager.default_strategies :sso
+          manager.failure_app = RailsSso::FailureApp
+        end
       end
     end
   end

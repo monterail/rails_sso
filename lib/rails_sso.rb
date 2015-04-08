@@ -26,9 +26,13 @@ module RailsSso
   end
 end
 
+require 'warden'
 require 'omniauth-oauth2'
 require 'rails_sso/version'
 require 'rails_sso/engine'
+require 'rails_sso/utils'
 require 'rails_sso/helpers'
 require 'rails_sso/client'
 require 'rails_sso/response_error'
+require 'rails_sso/sso_strategy'
+require 'rails_sso/failure_app'
