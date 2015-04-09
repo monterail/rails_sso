@@ -71,8 +71,10 @@ Available helpers for controllers and views:
 Available filters and helpers for controllers:
 
 * `authenticate_user!`
-* `save_access_token!`
-* `invalidate_access_token!`
+* `sign_in_with_access_token!(access_token)`
+* `sign_out!`
+* `warden`
+* `sso_app`
 
 Available helpers for views:
 
