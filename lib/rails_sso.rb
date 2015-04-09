@@ -24,13 +24,17 @@ module RailsSso
   def self.provider_callback_path
     "/sso/#{self.provider_name}/callback"
   end
+
+  def self.oauth2_strategy_class
+    OmniAuth::Strategies.const_get("#{OmniAuth::Utils.camelize(provider_name.to_s)}")
+  end
 end
 
 require 'warden'
 require 'omniauth-oauth2'
 require 'rails_sso/version'
+require 'rails_sso/app'
 require 'rails_sso/engine'
-require 'rails_sso/utils'
 require 'rails_sso/helpers'
 require 'rails_sso/client'
 require 'rails_sso/response_error'

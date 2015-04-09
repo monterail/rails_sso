@@ -1,5 +1,11 @@
 module RailsSso
-  module Utils
+  class App
+    attr_reader :strategy, :session
+
+    def initialize(strategy, session)
+      @strategy, @session = strategy, session
+    end
+
     def fetch_user_data
       FetchUser.new(provider_client.token!(session[:access_token])).call
     rescue ResponseError => e
@@ -24,9 +30,15 @@ module RailsSso
     end
 
     def access_token
-      OAuth2::AccessToken.new(oauth2_strategy.client, session[:access_token], {
+      OAuth2::AccessToken.new(strategy.client, session[:access_token], {
         refresh_token: session[:refresh_token]
       })
+    end
+
+    def invalidate_access_token!
+      if RailsSso.provider_sign_out_path
+        access_token.delete(RailsSso.provider_sign_out_path)
+      end
     end
 
     def provider_client
@@ -41,14 +53,6 @@ module RailsSso
 
         conn.adapter Faraday.default_adapter
       end
-    end
-
-    def oauth2_strategy
-      oauth2_strategy_class.new(request, RailsSso.provider_key, RailsSso.provider_secret)
-    end
-
-    def oauth2_strategy_class
-      OmniAuth::Strategies.const_get("#{OmniAuth::Utils.camelize(RailsSso.provider_name.to_s)}")
     end
   end
 end

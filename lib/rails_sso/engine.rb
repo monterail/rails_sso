@@ -8,6 +8,24 @@ module RailsSso
 
     initializer 'sso.omniauth', after: :load_config_initializers, before: :build_middleware_stack do |app|
       if RailsSso.provider_name
+        RailsSso.oauth2_strategy_class.class_eval do
+          def setup_phase
+            setup_sso!
+
+            super
+          end
+
+          def other_phase
+            setup_sso!
+
+            call_app!
+          end
+
+          def setup_sso!
+            env['sso'] ||= RailsSso::App.new(self, session)
+          end
+        end
+
         app.config.middleware.use OmniAuth::Builder do
           provider RailsSso.provider_name,
             RailsSso.provider_key,

@@ -1,7 +1,5 @@
 module RailsSso
   class SsoStrategy < ::Warden::Strategies::Base
-    include Utils
-
     def store?
       false
     end
@@ -11,7 +9,7 @@ module RailsSso
     end
 
     def authenticate!
-      fetch_user_data.tap do |user|
+      env['sso'].fetch_user_data.tap do |user|
         if user.nil?
           fail! 'strategies.sso.failed'
         else

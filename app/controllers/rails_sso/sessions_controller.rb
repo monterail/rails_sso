@@ -1,17 +1,15 @@
 module RailsSso
   class SessionsController < RailsSso.application_controller.constantize
-    include Utils
-
     skip_before_action :authenticate_user!, only: [:create]
 
     def create
-      save_access_token!(auth_hash.credentials)
+      sign_in_with_access_token!(auth_hash.credentials)
 
       redirect_to root_path
     end
 
     def destroy
-      invalidate_access_token!
+      sign_out!
 
       redirect_to root_path
     end

@@ -22,7 +22,7 @@ class RailsSso::SessionsControllerTest < ActionController::TestCase
   end
 
   test 'create should save access token and  redirect to root path' do
-    @controller.expects(:save_access_token!).with(@auth_hash.credentials).once
+    @controller.expects(:sign_in_with_access_token!).with(@auth_hash.credentials).once
 
     get :create, { provider: 'developer' }
 
@@ -30,7 +30,7 @@ class RailsSso::SessionsControllerTest < ActionController::TestCase
   end
 
   test 'destroy should invalidate access token and redirect to root path' do
-    @controller.expects(:invalidate_access_token!).once
+    @controller.expects(:sign_out!).once
 
     delete :destroy, {}, { access_token: 'abc', refresh_token: 'def' }
 

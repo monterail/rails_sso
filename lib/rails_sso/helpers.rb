@@ -18,16 +18,22 @@ module RailsSso
       warden.authenticated?
     end
 
-    def invalidate_access_token!
-      if RailsSso.provider_sign_out_path
-        access_token.delete(RailsSso.provider_sign_out_path)
-      end
+    def sign_in_with_access_token!(access_token)
+      sso_app.save_access_token!(access_token)
+    end
+
+    def sign_out!
+      sso_app.invalidate_access_token!
 
       warden.logout
     end
 
     def warden
       env['warden']
+    end
+
+    def sso_app
+      env['sso']
     end
   end
 end
