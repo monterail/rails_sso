@@ -81,6 +81,23 @@ Available helpers for views:
 * `sso.sign_in_path`
 * `sso.sign_out_path`
 
+## Testing & Development mode
+
+You can turn on "test mode" by enabling [OmniAuth test mode](https://github.com/intridea/omniauth/wiki/Integration-Testing).
+
+```ruby
+OmniAuth.config.test_mode = true
+```
+
+To mock user data use OmniAuth `mock_auth` feature with your provider.
+
+```ruby
+OmniAuth.config.mock_auth[:example] = OmniAuth::AuthHash.new({
+  name: 'John Kowalski',
+  uid: '42'
+})
+```
+
 ## Contributing
 
 1. Fork it
