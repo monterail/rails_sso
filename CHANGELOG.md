@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.0 - 29.04.2015
+
+* Mocking feature
+
 ## v0.4.0 - 09.04.2015
 
 * Use warden under the hood
