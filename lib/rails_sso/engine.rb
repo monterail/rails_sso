@@ -21,6 +21,12 @@ module RailsSso
             call_app!
           end
 
+          def mock_call!(*)
+            setup_sso!
+
+            super
+          end
+
           def setup_sso!
             env['sso'] ||= RailsSso::App.new(self, session)
           end

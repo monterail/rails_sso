@@ -30,6 +30,8 @@ module RailsSso
     end
 
     def access_token
+      return mock_token if OmniAuth.config.test_mode
+
       OAuth2::AccessToken.new(strategy.client, session[:access_token], {
         refresh_token: session[:refresh_token]
       })
@@ -43,16 +45,41 @@ module RailsSso
 
     def provider_client
       @provider_client ||= RailsSso::Client.new(RailsSso.provider_url) do |conn|
-        if RailsSso.use_cache
-          conn.use :http_cache,
-            store: Rails.cache,
-            logger: Rails.logger,
-            serializer: Marshal,
-            shared_cache: false
+        case
+        when OmniAuth.config.test_mode
+          mock_connection(conn)
+        else
+          setup_connection(conn)
         end
-
-        conn.adapter Faraday.default_adapter
       end
+    end
+
+    private
+
+    def setup_connection(conn)
+      if RailsSso.use_cache
+        conn.use :http_cache,
+          store: Rails.cache,
+          logger: Rails.logger,
+          serializer: Marshal,
+          shared_cache: false
+      end
+
+      conn.adapter Faraday.default_adapter
+    end
+
+    def mock_connection(conn)
+      conn.adapter :test do |stub|
+        stub.get(RailsSso.provider_profile_path) { |env| [200, {}, mock_auth] }
+      end
+    end
+
+    def mock_auth
+      OmniAuth.config.mock_auth[RailsSso.provider_name.to_sym].to_json
+    end
+
+    def mock_token
+      RailsSso::TokenMock.new
     end
   end
 end

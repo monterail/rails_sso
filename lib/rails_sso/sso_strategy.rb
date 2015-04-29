@@ -5,7 +5,7 @@ module RailsSso
     end
 
     def valid?
-      session[:access_token].present?
+      session[:access_token].present? || OmniAuth.config.test_mode
     end
 
     def authenticate!
