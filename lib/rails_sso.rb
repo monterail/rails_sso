@@ -1,6 +1,5 @@
 module RailsSso
   mattr_accessor :application_controller
-  @@application_controller = 'ApplicationController'
 
   mattr_accessor :provider_url
   mattr_accessor :provider_name
@@ -11,15 +10,19 @@ module RailsSso
   mattr_accessor :provider_sign_out_path
 
   mattr_accessor :use_cache
-  @@use_cache = false
 
-  mattr_reader :test_mode
-  @@test_mode = false
-
+  mattr_accessor :test_mode
   mattr_accessor :profile_mock
-  @@profile_mock = {}
+
+  mattr_accessor :failure_app
 
   def self.configure
+    self.application_controller = 'ApplicationController'
+    self.use_cache = false
+    self.test_mode = false
+    self.profile_mock = {}
+    self.failure_app = RailsSso::FailureApp
+
     yield self
   end
 

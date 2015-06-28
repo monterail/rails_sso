@@ -41,7 +41,7 @@ module RailsSso
 
         app.config.middleware.insert_after OmniAuth::Builder, Warden::Manager do |manager|
           manager.default_strategies :sso
-          manager.failure_app = RailsSso::FailureApp
+          manager.failure_app = RailsSso.failure_app
         end
       end
     end

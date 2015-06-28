@@ -48,6 +48,15 @@ RailsSso.configure do |config|
   config.provider_sign_out_path = '/api/v1/session'
   # enable cache (will use Rails.cache store)
   config.use_cache = Rails.application.config.action_controller.perform_caching
+  # test & development mode
+  config.test_mode = ENV['mock_sso']
+  config.profile_mock = {
+    user: 'John Blacksmith',
+    uid: '169783'
+  }
+  # custom failure app
+  # more: https://github.com/hassox/warden/wiki/Failures
+  config.failure_app = MyFailureApp
 end
 ```
 

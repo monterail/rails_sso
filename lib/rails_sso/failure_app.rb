@@ -9,7 +9,13 @@ module RailsSso
     end
 
     def respond
-      redirect_to sign_in_path
+      if request.content_type == 'application/json'
+        self.status = :unauthorized
+        self.content_type = request.content_type
+        self.response_body = ''
+      else
+        redirect_to sign_in_path
+      end
     end
   end
 end
