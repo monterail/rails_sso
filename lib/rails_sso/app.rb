@@ -30,7 +30,7 @@ module RailsSso
     end
 
     def access_token
-      return mock_token if OmniAuth.config.test_mode
+      return token_mock if RailsSso.test_mode
 
       OAuth2::AccessToken.new(strategy.client, session[:access_token], {
         refresh_token: session[:refresh_token]
@@ -46,7 +46,7 @@ module RailsSso
     def provider_client
       @provider_client ||= RailsSso::Client.new(RailsSso.provider_url) do |conn|
         case
-        when OmniAuth.config.test_mode
+        when RailsSso.test_mode
           mock_connection(conn)
         else
           setup_connection(conn)
@@ -70,15 +70,15 @@ module RailsSso
 
     def mock_connection(conn)
       conn.adapter :test do |stub|
-        stub.get(RailsSso.provider_profile_path) { |env| [200, {}, mock_auth] }
+        stub.get(RailsSso.provider_profile_path) { |env| [200, {}, profile_mock] }
       end
     end
 
-    def mock_auth
-      OmniAuth.config.mock_auth[RailsSso.provider_name.to_sym].to_json
+    def profile_mock
+      RailsSso.profile_mock.to_json
     end
 
-    def mock_token
+    def token_mock
       RailsSso::TokenMock.new
     end
   end

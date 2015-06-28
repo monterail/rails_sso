@@ -83,19 +83,23 @@ Available helpers for views:
 
 ## Testing & Development mode
 
-You can turn on "test mode" by enabling [OmniAuth test mode](https://github.com/intridea/omniauth/wiki/Integration-Testing).
+You can turn on "test mode" by enabling test mode. It will also automatically enable [OmniAuth test mode](https://github.com/intridea/omniauth/wiki/Integration-Testing).
 
 ```ruby
-OmniAuth.config.test_mode = true
+RailsSso.configure do
+  config.test_mode = true
+end
 ```
 
-To mock user data use OmniAuth `mock_auth` feature with your provider.
+Mock data should be passed to `profile_mock` configuration.
 
 ```ruby
-OmniAuth.config.mock_auth[:example] = OmniAuth::AuthHash.new({
-  name: 'John Kowalski',
-  uid: '42'
-})
+RailsSso.configure do |config|
+  config.profile_mock = {
+    name: 'John Kowalski',
+    uid: '42'
+  }
+end
 ```
 
 ## Contributing

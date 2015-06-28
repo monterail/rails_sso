@@ -13,6 +13,12 @@ module RailsSso
   mattr_accessor :use_cache
   @@use_cache = false
 
+  mattr_reader :test_mode
+  @@test_mode = false
+
+  mattr_accessor :profile_mock
+  @@profile_mock = {}
+
   def self.configure
     yield self
   end
@@ -27,6 +33,11 @@ module RailsSso
 
   def self.oauth2_strategy_class
     OmniAuth::Strategies.const_get("#{OmniAuth::Utils.camelize(provider_name.to_s)}")
+  end
+
+  def self.test_mode=(value)
+    @@test_mode = value
+    OmniAuth.config.test_mode = value
   end
 end
 
