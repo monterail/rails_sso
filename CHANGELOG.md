@@ -1,8 +1,10 @@
 # Changelog
 
-## v0.6.0 - ?
+## v0.6.0 - 29.06.2015
 
 * Mock profile request, not OmniAuth
+* Custom FailureApp
+* Handle JSON in default FailureApp
 
 ## v0.5.0 - 29.04.2015
 
