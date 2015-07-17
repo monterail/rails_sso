@@ -29,11 +29,11 @@ module RailsSso
     end
 
     def warden
-      env['warden']
+      request.env['warden']
     end
 
     def sso_app
-      env['sso']
+      request.env['sso']
     end
   end
 end
