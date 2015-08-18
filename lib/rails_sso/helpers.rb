@@ -11,7 +11,10 @@ module RailsSso
     end
 
     def authenticate_user!
-      warden.authenticate!
+      unless user_signed_in?
+        session[:rails_sso_return_path] = request.path
+        warden.authenticate!
+      end
     end
 
     def user_signed_in?
