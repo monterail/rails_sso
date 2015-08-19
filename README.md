@@ -35,6 +35,8 @@ Configure initializer:
 # conifg/initializers/sso.rb
 
 RailsSso.configure do |config|
+  # include RailsSso::Helpers to ActionController::Base
+  config.magic_enabled = true
   # url of entity provider
   config.provider_url = 'https://example.com'
   # name of oauth2 provider
@@ -74,6 +76,14 @@ end
 ```
 
 ## Usage
+
+Include helpers to your controller if you disabled auto include:
+
+```ruby
+class ApplicationController < ActionController::Base
+  include RailsSso::Helpers
+end
+```
 
 Available helpers for controllers and views:
 

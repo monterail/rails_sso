@@ -1,4 +1,6 @@
 RailsSso.configure do |config|
+  # include RailsSso::Helpers to ActionController::Base
+  config.magic_enabled = true
   # url of entity provider
   config.provider_url = 'https://example.com'
   # name of oauth2 provider

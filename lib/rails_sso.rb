@@ -1,5 +1,6 @@
 module RailsSso
   mattr_accessor :application_controller
+  mattr_accessor :magic_enabled
 
   mattr_accessor :provider_url
   mattr_accessor :provider_name
@@ -18,7 +19,8 @@ module RailsSso
   mattr_accessor :failure_app
 
   def self.configure
-    self.application_controller = 'ApplicationController'
+    self.application_controller = "ApplicationController"
+    self.magic_enabled = true
     self.use_cache = false
     self.test_mode = false
     self.profile_mocks = {}
@@ -52,14 +54,14 @@ module RailsSso
   end
 end
 
-require 'warden'
-require 'omniauth-oauth2'
-require 'rails_sso/version'
-require 'rails_sso/app'
-require 'rails_sso/engine'
-require 'rails_sso/helpers'
-require 'rails_sso/client'
-require 'rails_sso/response_error'
-require 'rails_sso/sso_strategy'
-require 'rails_sso/failure_app'
-require 'rails_sso/token_mock'
+require "warden"
+require "omniauth-oauth2"
+require "rails_sso/version"
+require "rails_sso/app"
+require "rails_sso/engine"
+require "rails_sso/helpers"
+require "rails_sso/client"
+require "rails_sso/response_error"
+require "rails_sso/sso_strategy"
+require "rails_sso/failure_app"
+require "rails_sso/token_mock"

@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.7.0 - 19.08.2015
+
+* Remember user's current path
+* Allow to mock signed out state
+
+**Backward incomatible changes**
+
+* Select profile mock based on access token mock
+* Require explicite include of helpers
+
 ## v0.6.0 - 29.06.2015
 
 * Mock profile request, not OmniAuth
