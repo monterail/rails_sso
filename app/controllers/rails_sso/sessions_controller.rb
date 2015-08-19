@@ -5,7 +5,7 @@ module RailsSso
     def create
       sign_in_with_access_token!(auth_hash.credentials)
 
-      redirect_to root_path
+      redirect_to session.delete(:rails_sso_return_path) || root_path
     end
 
     def destroy
