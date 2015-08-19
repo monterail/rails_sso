@@ -50,9 +50,12 @@ RailsSso.configure do |config|
   config.use_cache = Rails.application.config.action_controller.perform_caching
   # test & development mode
   config.test_mode = ENV['mock_sso']
-  config.profile_mock = {
-    user: 'John Blacksmith',
-    uid: '169783'
+  config.access_token_mock = ENV['access_token_mock']
+  config.profiles_mock = {
+    '169783' => {
+      user: 'John Blacksmith',
+      uid: '169783'
+    }
   }
   # custom failure app
   # more: https://github.com/hassox/warden/wiki/Failures
@@ -110,6 +113,8 @@ RailsSso.configure do |config|
   }
 end
 ```
+
+To mock signed out state set `profile_mock = nil`.
 
 ## Contributing
 

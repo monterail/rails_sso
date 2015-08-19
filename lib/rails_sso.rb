@@ -12,7 +12,8 @@ module RailsSso
   mattr_accessor :use_cache
 
   mattr_accessor :test_mode
-  mattr_accessor :profile_mock
+  mattr_accessor :profile_mocks
+  mattr_accessor :access_token_mock
 
   mattr_accessor :failure_app
 
@@ -20,7 +21,8 @@ module RailsSso
     self.application_controller = 'ApplicationController'
     self.use_cache = false
     self.test_mode = false
-    self.profile_mock = {}
+    self.profile_mocks = {}
+    self.access_token_mock = nil
     self.failure_app = RailsSso::FailureApp
 
     yield self
@@ -41,6 +43,12 @@ module RailsSso
   def self.test_mode=(value)
     @@test_mode = value
     OmniAuth.config.test_mode = value
+  end
+
+  def self.profile_mock
+    @@profile_mocks.fetch(@@access_token_mock) do
+      fail %Q{Mock "#{@@access_token_mock}" has not beed setup!}
+    end
   end
 end
 

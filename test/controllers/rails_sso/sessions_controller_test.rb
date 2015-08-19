@@ -21,7 +21,7 @@ class RailsSso::SessionsControllerTest < ActionController::TestCase
     OmniAuth.config.mock_auth[:developer] = nil
   end
 
-  test 'create should save access token and  redirect to root path' do
+  test 'create should save access token and redirect to root path' do
     @controller.expects(:sign_in_with_access_token!).with(@auth_hash.credentials).once
 
     get :create, { provider: 'developer' }

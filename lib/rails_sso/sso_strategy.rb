@@ -5,17 +5,24 @@ module RailsSso
     end
 
     def valid?
-      session[:access_token].present? || OmniAuth.config.test_mode
+      session[:access_token].present? || access_token_mock
     end
 
     def authenticate!
-      env['sso'].fetch_user_data.tap do |user|
-        if user.nil?
-          fail! 'strategies.sso.failed'
-        else
-          success! user
-        end
+      user = env["sso"].fetch_user_data
+
+      case
+      when user.nil?
+        fail! "strategies.sso.failed"
+      else
+        success! user
       end
+    end
+
+    private
+
+    def access_token_mock
+      RailsSso.access_token_mock if RailsSso.test_mode
     end
   end
 end

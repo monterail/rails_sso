@@ -1,12 +1,12 @@
 module RailsSso
   class Engine < Rails::Engine
-    initializer 'sso.helpers' do
+    initializer "sso.helpers" do
       ActiveSupport.on_load(:action_controller) do
         include RailsSso::Helpers
       end
     end
 
-    initializer 'sso.omniauth', after: :load_config_initializers, before: :build_middleware_stack do |app|
+    initializer "sso.omniauth", after: :load_config_initializers, before: :build_middleware_stack do |app|
       if RailsSso.provider_name
         RailsSso.oauth2_strategy_class.class_eval do
           def setup_phase
@@ -28,7 +28,15 @@ module RailsSso
           end
 
           def setup_sso!
-            env['sso'] ||= RailsSso::App.new(self, session)
+            env["sso"] ||= RailsSso::App.new(self, session, sso_client)
+          end
+
+          def sso_client
+            if RailsSso.test_mode
+              RailsSso::Client.build_fake(RailsSso.provider_url)
+            else
+              RailsSso::Client.build_real(RailsSso.provider_url)
+            end
           end
         end
 

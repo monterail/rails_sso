@@ -1,9 +1,9 @@
 module RailsSso
   class App
-    attr_reader :strategy, :session
+    attr_reader :strategy, :session, :provider_client
 
-    def initialize(strategy, session)
-      @strategy, @session = strategy, session
+    def initialize(strategy, session, provider_client)
+      @strategy, @session, @provider_client = strategy, session, provider_client
     end
 
     def fetch_user_data
@@ -43,40 +43,7 @@ module RailsSso
       end
     end
 
-    def provider_client
-      @provider_client ||= RailsSso::Client.new(RailsSso.provider_url) do |conn|
-        case
-        when RailsSso.test_mode
-          mock_connection(conn)
-        else
-          setup_connection(conn)
-        end
-      end
-    end
-
     private
-
-    def setup_connection(conn)
-      if RailsSso.use_cache
-        conn.use :http_cache,
-          store: Rails.cache,
-          logger: Rails.logger,
-          serializer: Marshal,
-          shared_cache: false
-      end
-
-      conn.adapter Faraday.default_adapter
-    end
-
-    def mock_connection(conn)
-      conn.adapter :test do |stub|
-        stub.get(RailsSso.provider_profile_path) { |env| [200, {}, profile_mock] }
-      end
-    end
-
-    def profile_mock
-      RailsSso.profile_mock.to_json
-    end
 
     def token_mock
       RailsSso::TokenMock.new
