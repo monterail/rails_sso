@@ -53,7 +53,7 @@ RailsSso.configure do |config|
   # test & development mode
   config.test_mode = ENV['mock_sso']
   config.access_token_mock = ENV['access_token_mock']
-  config.profiles_mock = {
+  config.profile_mocks = {
     '169783' => {
       user: 'John Blacksmith',
       uid: '169783'
@@ -113,18 +113,32 @@ RailsSso.configure do
 end
 ```
 
-Mock data should be passed to `profile_mock` configuration.
+Mock data should be passed to `profile_mocks` configuration with dummy access token as a key.
 
 ```ruby
 RailsSso.configure do |config|
-  config.profile_mock = {
-    name: 'John Kowalski',
-    uid: '42'
+  config.profile_mocks = {
+    "kowalski_uid" => {
+      "name" => "John Kowalski",
+      "uid" => "42"
+    },
+    "nowak_uid" => {
+      "name" => "Pawel Nowak",
+      "uid" => "23"
+    }
   }
 end
 ```
 
-To mock signed out state set `profile_mock = nil`.
+Finally you have to select which token to use.
+
+```ruby
+RailsSso.configure do |config|
+  config.access_token_mock = "kowalski_uid"
+end
+```
+
+To mock signed out state set `nil` to access token value.
 
 ## Contributing
 
