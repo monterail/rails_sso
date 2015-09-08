@@ -10,7 +10,7 @@ module RailsSso
 
     def self.build_real(url)
       build(url) do |conn|
-        if RailsSso.use_cache
+        if RailsSso.config.use_cache
           conn.use :http_cache,
             store: Rails.cache,
             logger: Rails.logger,
@@ -25,13 +25,13 @@ module RailsSso
     def self.build_fake(url)
       build(url) do |conn|
         conn.adapter :test do |stub|
-          RailsSso.profile_mocks.each do |token, profile|
+          RailsSso.config.profile_mocks.each do |token, profile|
             headers = {
               "Content-Type" => "application/json",
               "Authorization" => "Bearer #{token}"
             }
 
-            stub.get(RailsSso.provider_profile_path, headers) do |env|
+            stub.get(RailsSso.config.provider_profile_path, headers) do |env|
               if profile.nil?
                 [401, { "Content-Type" => "application/json" }, ""]
               else

@@ -22,7 +22,7 @@ module RailsSso
     private
 
     def access_token_mock
-      RailsSso.access_token_mock if RailsSso.test_mode
+      RailsSso.config.access_token_mock if RailsSso.config.test_mode
     end
   end
 end

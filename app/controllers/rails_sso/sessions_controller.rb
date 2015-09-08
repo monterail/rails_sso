@@ -1,5 +1,5 @@
 module RailsSso
-  class SessionsController < RailsSso.application_controller.constantize
+  class SessionsController < RailsSso.config.application_controller.constantize
     skip_before_action :authenticate_user!, only: [:create]
 
     def create

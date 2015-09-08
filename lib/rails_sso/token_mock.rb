@@ -9,7 +9,7 @@ module RailsSso
     def initialize(*)
       @connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.delete(RailsSso.provider_sign_out_path) { |env| [200, {}, ''] }
+          stub.delete(RailsSso.config.provider_sign_out_path) { |env| [200, {}, ''] }
         end
       end
     end

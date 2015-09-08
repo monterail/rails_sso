@@ -30,7 +30,7 @@ module RailsSso
     end
 
     def access_token
-      return token_mock if RailsSso.test_mode
+      return token_mock if RailsSso.config.test_mode
 
       OAuth2::AccessToken.new(strategy.client, session[:access_token], {
         refresh_token: session[:refresh_token]
@@ -38,8 +38,8 @@ module RailsSso
     end
 
     def invalidate_access_token!
-      if RailsSso.provider_sign_out_path
-        access_token.delete(RailsSso.provider_sign_out_path)
+      if RailsSso.config.provider_sign_out_path
+        access_token.delete(RailsSso.config.provider_sign_out_path)
       end
     end
 

@@ -7,7 +7,7 @@ module RailsSso
     end
 
     def call
-      response = client.get(RailsSso.provider_profile_path)
+      response = client.get(RailsSso.config.provider_profile_path)
 
       case response.status
       when 200

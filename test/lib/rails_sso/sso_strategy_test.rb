@@ -18,8 +18,8 @@ class RailsSso::SsoStrategyTest < ActiveSupport::TestCase
   test "is valid when in test mode with access token mock" do
     env = { "rack.session" => {} }
     strategy = RailsSso::SsoStrategy.new(env)
-    RailsSso.stubs(:test_mode).returns(true)
-    RailsSso.stubs(:access_token_mock).returns("169783")
+    RailsSso.config.stubs(:test_mode).returns(true)
+    RailsSso.config.stubs(:access_token_mock).returns("169783")
 
     assert strategy.valid?
   end
@@ -27,8 +27,8 @@ class RailsSso::SsoStrategyTest < ActiveSupport::TestCase
   test "is invalid when in test mode without access token mock" do
     env = { "rack.session" => {} }
     strategy = RailsSso::SsoStrategy.new(env)
-    RailsSso.stubs(:test_mode).returns(true)
-    RailsSso.stubs(:access_token_mock).returns(nil)
+    RailsSso.config.stubs(:test_mode).returns(true)
+    RailsSso.config.stubs(:access_token_mock).returns(nil)
 
     refute strategy.valid?
   end
