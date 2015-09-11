@@ -13,5 +13,13 @@ module RailsSso
         end
       end
     end
+
+    def token
+      RailsSso.config.access_token_mock
+    end
+
+    def refresh_token
+      nil
+    end
   end
 end

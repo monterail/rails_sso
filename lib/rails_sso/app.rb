@@ -7,10 +7,10 @@ module RailsSso
     end
 
     def fetch_user_data
-      FetchUser.new(provider_client.token!(session[:access_token])).call
+      FetchUser.new(provider_client.token!(current_access_token_value)).call
     rescue ResponseError => e
       refresh_access_token! do
-        FetchUser.new(provider_client.token!(session[:access_token])).call
+        FetchUser.new(provider_client.token!(current_access_token_value)).call
       end if e.code == :unauthenticated
     end
 
@@ -30,7 +30,7 @@ module RailsSso
     end
 
     def access_token
-      return token_mock if RailsSso.config.test_mode
+      return token_mock if RailsSso.config.test_mode?
 
       OAuth2::AccessToken.new(strategy.client, session[:access_token], {
         refresh_token: session[:refresh_token]
@@ -45,8 +45,18 @@ module RailsSso
 
     private
 
+    def current_access_token_value
+      session[:access_token] or current_access_token_mock
+    end
+
+    def current_access_token_mock
+      if RailsSso.config.test_mode?
+        token_mock.token
+      end
+    end
+
     def token_mock
-      RailsSso::TokenMock.new
+      @token_mock ||= RailsSso::TokenMock.new
     end
   end
 end
