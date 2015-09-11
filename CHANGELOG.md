@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.1 - 11.09.2015
+
+* Wrap configuration logic into Configuration class
+* Raise error when provider_url is missing
+* Fix mocking token
+
 ## v0.7.0 - 19.08.2015
 
 * Remember user's current path
