@@ -7,14 +7,15 @@ module RailsSso
     end
 
     def current_user_data
-      warden.user
+      @current_user_data ||= warden.authenticate
     end
 
     def authenticate_user!
       unless user_signed_in?
         session[:rails_sso_return_path] = request.path
-        warden.authenticate!
       end
+
+      warden.authenticate!
     end
 
     def user_signed_in?
