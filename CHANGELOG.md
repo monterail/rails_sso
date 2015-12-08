@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.7.2 - 08.12.2015
+
+* Fix fetching user data on not restricted actions
+
 ## v0.7.1 - 11.09.2015
 
 * Wrap configuration logic into Configuration class
