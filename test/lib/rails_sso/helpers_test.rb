@@ -12,8 +12,8 @@ class RailsSso::HelpersTest < ActionController::TestCase
     assert_equal @mock_warden, @controller.warden
   end
 
-  test "proxy signed_in? to authenticated?" do
-    @mock_warden.expects(:authenticated?).once
+  test "proxy signed_in? to authenticate?" do
+    @mock_warden.expects(:authenticate?).once
     @controller.user_signed_in?
   end
 
