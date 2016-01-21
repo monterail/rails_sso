@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.1"
   s.add_dependency "faraday-http-cache", "~> 1.0"
-  s.add_dependency "omniauth-oauth2", "~> 1.2"
+  s.add_dependency "omniauth-oauth2", "~> 1.2", "< 1.4"
   s.add_dependency "warden", "~> 1.2"
 
   s.add_development_dependency "sqlite3"
