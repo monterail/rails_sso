@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.7.5 - 17.03.2016
+
+* Use `request.xhr?` instead of `request.content_type` in failure app
+
 ## v0.7.3 - 09.12.2015
 
 * Fix user_signed_in? on not restricted actions
