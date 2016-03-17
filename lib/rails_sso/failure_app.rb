@@ -9,7 +9,7 @@ module RailsSso
     end
 
     def respond
-      if request.content_type == 'application/json'
+      if request.xhr?
         self.status = :unauthorized
         self.content_type = request.content_type
         self.response_body = ''
