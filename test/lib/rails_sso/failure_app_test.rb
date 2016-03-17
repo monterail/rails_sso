@@ -16,7 +16,7 @@ class RailsSso::FailureAppTest < ActiveSupport::TestCase
     env = {
       'REQUEST_URI' => 'http://test.host',
       'HTTP_HOST' => 'test.host',
-      'CONTENT_TYPE' => 'application/json'
+      'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
     }
     response = RailsSso::FailureApp.call(env).to_a
 
